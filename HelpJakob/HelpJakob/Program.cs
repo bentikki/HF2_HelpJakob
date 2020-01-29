@@ -10,35 +10,39 @@ namespace HelpJakob
     {
         static void Main(string[] args)
         {
-
+            List<Message> msgList = new List<Message>();
             Message msgSMTP = new MessageSMTP(
                 "from@mail.dk",
                 "Body text",
                 "Subject text",
                 true
                 );
-            string toMail = "tomail@mail.dk";
-            msgSMTP.SendTo(toMail);
-
-            Console.WriteLine("Send to multiple:");
-            string[] toMailArray = new string[2] { "test@test.dk", "test2@mail.dk" };
-            msgSMTP.SendTo(toMailArray);
-
-            Console.WriteLine();
-            Console.WriteLine();
-
             Message msgVMessage = new MessageVMessage(
                 "from@mail.dk",
                 "Body text",
                 "Subject text",
                 true
                 );
-            toMail = "tomail@mail.dk";
-            msgVMessage.SendTo(toMail);
+            msgList.Add(msgSMTP);
+            msgList.Add(msgVMessage);
 
-            Console.WriteLine("Send to multiple:");
-            toMailArray = new string[2] { "test@test.dk", "test2@mail.dk" };
-            msgVMessage.SendTo(toMailArray);
+
+            string toMail = "tomail@mail.dk";
+            string[] toMailArray = new string[2] { "test@test.dk", "test2@mail.dk" };
+
+
+            foreach (Message msg in msgList)
+            {
+                Console.WriteLine("Send to Single:");
+                msg.SendTo(toMail);
+
+                Console.WriteLine("Send to multiple:");
+                msg.SendTo(toMailArray);
+
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
             Console.ReadKey();
 
         }
